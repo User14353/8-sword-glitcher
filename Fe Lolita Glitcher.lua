@@ -120,65 +120,36 @@ local function RunReanimate()
         local s3_ani = math.sin(tick() * 1.5) * 0.7
         local s4_ani = math.sin(tick() * 1) * 2.5
 	
-	UIS.InputBegan:Connect(function(input, gameProcessed)
-    		if gameProcessed then return end -- Ignore if player is typing in chat
-
-    			if input.KeyCode == Enum.KeyCode.Q then
-        			local mode = "q"
-    		end
-		    		if gameProcessed then return end -- Ignore if player is typing in chat
-
-    			if input.KeyCode == Enum.KeyCode.E then
-        			local mode = "e"
-    		end
-	end)
-	if state == "idle" and mode == "e" then
-		targets.root = cf(
-		    Vector3.new(0, 2.13, 0),
-		    Vector3.new(-109.0, 0, -180.0)
-		)
-
-		targets.neck = cf(
-		    Vector3.new(0, 1, 0),
-		    Vector3.new(-82.0, 0, -180.0)
-		)
-
-		targets.rs = cf(
-		    Vector3.new(1, 0.5339, 0),
-		    Vector3.new(0, 80.0, 18.0)
-		)
-
-		targets.ls = cf(
-		    Vector3.new(-1, 0.5448, 0),
-		    Vector3.new(0, -80.0, -18.0)
-		)
-
-		targets.rh = cf(
-		    Vector3.new(1, -0.6, -1.6),
-		    Vector3.new(-47.5, 90.0, 0)
-		)
-	
-		targets.lh = cf(
-		    Vector3.new(-1, -1, 0),
-		    Vector3.new(0, -80.0, 61.5)
-		)
-            
-            hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
-            hatTargets.Sword1 = cf(Vector3.new(-4+s3_ani, -4, 6+s3_ani), Vector3.new(100, -50-s6, 100))
-            hatTargets.Sword2 = cf(Vector3.new(-10+s4_ani, -5, 7+s4_ani), Vector3.new(100, -70-s5, 100))
-            hatTargets.Sword3 = cf(Vector3.new(4-s3_ani, -4, 6+s3_ani), Vector3.new(100, -30+s6, 100))
-            hatTargets.Sword4 = cf(Vector3.new(10-s4_ani, -5, 7+s4_ani), Vector3.new(100, -10+s5, 100))
-            hatTargets.Sword5 = cf(Vector3.new(-16+s3_ani, -3, 8+s4_ani), Vector3.new(100, -90-s7, 100))
-            hatTargets.Sword6 = cf(Vector3.new(16+s3_ani, -4, 8+s4_ani), Vector3.new(100, 10+s7, 100))
-            hatTargets.Sword7 = cf(Vector3.new(6-s3_ani, -10, 10), Vector3.new(100, -20+s6, 100))
-            hatTargets.Sword8 = cf(Vector3.new(-6+s3_ani, -10, 10), Vector3.new(100, -70-s6, 100))
-        if state == "idle" and mode == "q" then
-            targets.root = cf(Vector3.new(0,0,-0.3), Vector3.new(70,0,0))
-            targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-30+s_ani,s1_ani,s1_ani))
-            targets.rs = cf(Vector3.new(0,0,0), Vector3.new(-15,-10,60+s2_ani))
-            targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-30,-20,-190+-s2_ani))
-            targets.rh = cf(Vector3.new(0.8,1,0), Vector3.new(-10+s2_ani,0,60))
-            targets.lh = cf(Vector3.new(-1,-0.5,0), Vector3.new(-10+s2_ani,0,0))
+	if state == "idle" then
+			targets.root = cf(
+				Vector3.new(0, 2.13, 0),
+				Vector3.new(-109.0, 0, -180.0)
+			)
+			
+			targets.neck = cf(
+				Vector3.new(0, 1, 0),
+				Vector3.new(-82.0, 0, -180.0)
+			)
+			
+			targets.rs = cf(
+				Vector3.new(1, 0.5339, 0),
+				Vector3.new(0, 80.0, 18.0)
+			)
+			
+			targets.ls = cf(
+				Vector3.new(-1, 0.5448, 0),
+				Vector3.new(0, -80.0, -18.0)
+			)
+			
+			targets.rh = cf(
+				Vector3.new(1, -0.6, -1.6),
+				Vector3.new(-47.5, 90.0, 0)
+			)
+			
+			targets.lh = cf(
+				Vector3.new(-1, -1, 0),
+				Vector3.new(0, -80.0, 61.5)
+			)
             
             hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
             hatTargets.Sword1 = cf(Vector3.new(-4+s3_ani, -4, 6+s3_ani), Vector3.new(100, -50-s6, 100))
