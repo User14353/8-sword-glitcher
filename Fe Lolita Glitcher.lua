@@ -127,26 +127,26 @@ local function RunReanimate()
 			)
 			
 			targets.neck = cf(
-			    Vector3.new(0, 1, 0),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(1.4, 0, -3.1416)
 			)
 
 			targets.rs = cf(
-			    Vector3.new(0, 0.5339, 0),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(0, 1.3963, 0.3142)
 			)
 			
 			targets.ls = cf(
-			    Vector3.new(-0, 0.5448, 0),
+			    Vector3.new(-0, 0, 0),
 			    Vector3.new(0, -1.3963, -0.3142)
 			)
 			targets.rh = cf(
-			    Vector3.new(0, -0.6, -1.6),
+			    Vector3.new(0, -0, -0),
 			    Vector3.new(-0.8279,1.5708,0.0000)
 			)
 			
 			targets.lh = cf(
-			    Vector3.new(-1, -1, 0),
+			    Vector3.new(-0, -0, 0),
 			    Vector3.new(0, 1.3963,1.0727)
 			)
             hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
