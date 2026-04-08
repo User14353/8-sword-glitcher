@@ -122,32 +122,32 @@ local function RunReanimate()
 	
 	if state == "idle" then
 			targets.root = cf(
-			    Vector3.new(0, 21.3, 0),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(-19.024, 0, -31.416)
 			)
 			
 			targets.neck = cf(
-			    Vector3.new(0, 10, 0),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(-14.312, 0, -31.416)
 			)
 			
 			targets.rs = cf(
-			    Vector3.new(10, 5.339, 0),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(0, 13.963, 3.142)
 			)
 			
 			targets.ls = cf(
-			    Vector3.new(-10, 5.448, 0),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(0, -13.963, -3.142)
 			)
 			
 			targets.rh = cf(
-			    Vector3.new(10, -6, -16),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(-8.279, 15.708, 0)
 			)
 			
 			targets.lh = cf(
-			    Vector3.new(-10, -10, 0),
+			    Vector3.new(0, 0, 0),
 			    Vector3.new(0, -13.963, 10.727)
 			)
             hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
