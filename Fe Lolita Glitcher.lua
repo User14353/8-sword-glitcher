@@ -133,12 +133,12 @@ local function RunReanimate()
 			
 			targets.ls = cf(
 			    Vector3.new(-0.0000011, 0.0000005, -0.0000007),
-			    Vector3.new(34.21, 39.02, 126.87)
+			    Vector3.new(-34.21, 39.02, -126.87)
 			)
 			
 			targets.rs = cf(
 			    Vector3.new(0.0000002, -0.0000006, 0.0000010),
-			    Vector3.new(27.98, 47.61, -149.32)
+			    Vector3.new(-27.98, 47.61, 149.32)
 			)
 			
 			targets.lh = cf(
