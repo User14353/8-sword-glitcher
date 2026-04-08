@@ -121,35 +121,19 @@ local function RunReanimate()
         local s4_ani = math.sin(tick() * 1) * 2.5
 	
 	if state == "idle" then
-			targets.root = cf(
-			    Vector3.new(0, 0, 0),
-			    Vector3.new(8.63, 0, 0) -- Y was 0, so stays 0
-			)
-			
-			targets.neck = cf(
-			    Vector3.new(0, 0, 0),
-			    Vector3.new(-18.41, 0, 0)
-			)
-			
-			targets.ls = cf(
-			    Vector3.new(-0.0000011, 0.0000005, -0.0000007),
-			    Vector3.new(-30, -20, -160)
-			)
-			
-			targets.rs = cf(
-			    Vector3.new(0.0000002, -0.0000006, 0.0000010),
-			    Vector3.new(-27.98, 47.61, 149.32)
-			)
-			
-			targets.lh = cf(
-			    Vector3.new(0, 0, 0),
-			    Vector3.new(-1.64, 23.58, -7.91)
-			)
-			
-			targets.rh = cf(
-			    Vector3.new(0, 0, 0),
-			    Vector3.new(-2.11, 15.73, -10.44)
-			)
+			targets.root = cf(Vector3.new(0,0,0), Vector3.new(8.63, 0, 0))
+			targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-18.41, 0, 0))
+			targets.ls = cf(Vector3.new(-0.0000011, 0.0000005, -0.0000007), Vector3.new(-34.21, -39.02, -126.87))
+			targets.rs = cf(Vector3.new(0.0000002, -0.0000006, 0.0000010), Vector3.new(-27.98, 47.61, 149.32))
+			targets.lh = cf(Vector3.new(0,0,0), Vector3.new(-1.64, -23.58, -7.91))
+			targets.rh = cf(Vector3.new(0,0,0), Vector3.new(-2.11, 15.73, 10.44))targets.root = cf(Vector3.new(0,0,0), Vector3.new(8.63, 0, 0))
+			targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-18.41, 0, 0))
+			targets.ls = cf(Vector3.new(-0.0000011, 0.0000005, -0.0000007), Vector3.new(-34.21, -39.02, -126.87))
+			targets.rs = cf(Vector3.new(0.0000002, -0.0000006, 0.0000010), Vector3.new(-27.98, 47.61, 149.32))
+			targets.lh = cf(Vector3.new(0,0,0), Vector3.new(-1.64, -23.58, -7.91))
+			targets.rh = cf(Vector3.new(0,0,0), Vector3.new(-2.11, 15.73, 10.44))
+
+				
             hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
             hatTargets.Sword1 = cf(Vector3.new(-4+s3_ani, -4, 6+s3_ani), Vector3.new(100, -50-s6, 100))
             hatTargets.Sword2 = cf(Vector3.new(-10+s4_ani, -5, 7+s4_ani), Vector3.new(100, -70-s5, 100))
