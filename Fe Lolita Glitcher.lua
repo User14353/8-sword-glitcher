@@ -121,12 +121,12 @@ local function RunReanimate()
         local s4_ani = math.sin(tick() * 1) * 2.5
 	
 	if state == "idle" then
-			targets.root = cf(Vector3.new(0,0,0), Vector3.new(-8.63, 0, 0))
-			targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-18.41, 0, 0))
-			targets.ls = cf(Vector3.new(-0.0000011, 0.0000005, -0.0000007), Vector3.new(-27.21, -47.02, -149.87))
-			targets.rs = cf(Vector3.new(0.0000002, -0.0000006, 0.0000010), Vector3.new(-27.98, 47.61, 149.32))
-			targets.lh = cf(Vector3.new(0,0,0), Vector3.new(-2.64, 23.58, 10.91))
-			targets.rh = cf(Vector3.new(0,0,0), Vector3.new(-2.11, -15.73, -10.44))
+			targets.root=cf(Vector3.new(0,1.1+0.2*sin(sine*0.5),0),Vector3.new(-1.9198621771937625,0,3.141592653589793))
+			targets.ls=cf(Vector3.new(-1,0.5-0.1*sin(sine*0.5),0),Vector3.new(0.17453292519943295,-1.3962634015954636,0))
+			targets.neck=cf(Vector3.new(0,1,0),Vector3.new(-1.3962634015954636-0.03490658503988659*sin(sine*0.5),0,3.141592653589793))
+			targets.lh=cf(Vector3.new(-1,-0.6+0.2*sin(sine*0.3),-1.3),Vector3.new(-0.8552113334772214,-1.3962634015954636,0))
+			targets.rh=cf(Vector3.new(1,-1,0),Vector3.new(-0.8552113334772214,1.5707963267948966,0))
+			targets.rs=cf(Vector3.new(1,0.5-0.1*sin(sine*0.5),0),Vector3.new(0.17453292519943295,1.3962634015954636,0)) 
 
 				
             hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
