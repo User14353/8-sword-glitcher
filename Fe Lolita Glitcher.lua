@@ -133,22 +133,22 @@ local function RunReanimate()
 			
 			targets.ls = cf(
 			    Vector3.new(-0.0000011, 0.0000005, -0.0000007),
-			    Vector3.new(32.54, 42.28, 129.68)
+			    Vector3.new(34.21, 39.02, 126.87)
 			)
 			
 			targets.rs = cf(
 			    Vector3.new(0.0000002, -0.0000006, 0.0000010),
-			    Vector3.new(25.79, -49.58, -147.69)
+			    Vector3.new(27.98, -47.61, -149.32)
 			)
 			
 			targets.lh = cf(
 			    Vector3.new(0, 0, 0),
-			    Vector3.new(2.25, 23.05, 8.98)
+			    Vector3.new(1.64, 23.58, 7.91)
 			)
 			
 			targets.rh = cf(
 			    Vector3.new(0, 0, 0),
-			    Vector3.new(1.72, -16.22, -9.94)
+			    Vector3.new(2.11, -15.73, -10.44)
 			)
             hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
             hatTargets.Sword1 = cf(Vector3.new(-4+s3_ani, -4, 6+s3_ani), Vector3.new(100, -50-s6, 100))
