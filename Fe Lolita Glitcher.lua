@@ -37,8 +37,8 @@ local function RunReanimate()
         Sword5 = nil, Sword6 = nil, Sword7 = nil, Sword8 = nil, Halo = nil
     }
 
-    local textureIds = {
-        ["5316471565"] = "Sword1",
+    local textureIds = {	
+        ["5316471565"] = "Sword1",	
         ["5278777022"] = "Sword2", 
         ["5316510551"] = "Sword3",
         ["5692006383"] = "Sword4",
