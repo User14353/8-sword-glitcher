@@ -121,7 +121,7 @@ local function RunReanimate()
         local s4_ani = math.sin(tick() * 1) * 2.5
 	
 	if state == "idle" then
-			targets.root = cf(Vector3.new(0,0,0), Vector3.new(8.63, 0, 0))
+			targets.root = cf(Vector3.new(0,0,0), Vector3.new(-8.63, 0, 0))
 			targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-18.41, 0, 0))
 			targets.ls = cf(Vector3.new(-0.0000011, 0.0000005, -0.0000007), Vector3.new(-27.21, -47.02, -149.87))
 			targets.rs = cf(Vector3.new(0.0000002, -0.0000006, 0.0000010), Vector3.new(-27.98, 47.61, 149.32))
