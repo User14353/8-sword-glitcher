@@ -148,7 +148,7 @@ local function RunReanimate()
 			
 			targets.rh = cf(
 			    Vector3.new(0, 0, 0),
-			    Vector3.new(-2.11, -15.73, -10.44)
+			    Vector3.new(2.11, 15.73, 10.44)
 			)
             hatTargets.Halo = cf(Vector3.new(0, -1.5, 3.5), Vector3.new(25, 0, rotCont))
             hatTargets.Sword1 = cf(Vector3.new(-4+s3_ani, -4, 6+s3_ani), Vector3.new(100, -50-s6, 100))
