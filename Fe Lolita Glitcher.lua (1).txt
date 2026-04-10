@@ -151,15 +151,16 @@ local function RunReanimate()
     glow.AnchorPoint = Vector2.new(0.5, 0.5)
     glow.ImageColor3 = Color3.new(0, 0, 0)
 
-    local modeFrame = Instance.new("Frame", screenGui)
-    modeFrame.Size = UDim2.new(0, 130, 0, 28)
-    modeFrame.Position = UDim2.new(0.1, 0, 0.9, 0)
-    modeFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-    modeFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-    modeFrame.BackgroundTransparency = 0.5
-    modeFrame.BorderSizePixel = 0
-    local modeCorner = Instance.new("UICorner", modeFrame)
-    modeCorner.CornerRadius = UDim.new(0, 4)
+	local modeFrame = Instance.new("Frame", screenGui)
+	modeFrame.Size = UDim2.new(0.12, 0, 0.05, 0) -- scales with screen
+	modeFrame.Position = UDim2.new(0.1, 0, 0.9, 0)
+	modeFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+	modeFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+	modeFrame.BackgroundTransparency = 0.5
+	modeFrame.BorderSizePixel = 0
+	
+	local modeCorner = Instance.new("UICorner", modeFrame)
+	modeCorner.CornerRadius = UDim.new(0.2, 0)
 
     local modeText = Instance.new("TextLabel", modeFrame)
     modeText.Size = UDim2.new(1, 0, 1, 0)
