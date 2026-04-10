@@ -1,0 +1,532 @@
+local args = {
+	"cmd",
+	"-rs"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("01_server"):FireServer(unpack(args))
+wait(2)
+local args = {
+	"cmd",
+	"-r6"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("01_server"):FireServer(unpack(args))
+wait(1.5)
+local uis = game:GetService("UserInputService")
+local lp = game:GetService("Players").LocalPlayer
+local rs = game:GetService("RunService")
+local cam = workspace.CurrentCamera
+
+local lerpSpeed = 0.2
+
+local function cf(p, r) 
+    return CFrame.new(p) * CFrame.fromEulerAnglesXYZ(math.rad(r.X), math.rad(r.Y), math.rad(r.Z)) 
+end
+
+local function RunReanimate()
+    local reanimateScript = loadstring(game:HttpGet("https://raw.githubusercontent.com/oldhacfard/The-script/refs/heads/main/Reanimate.luau"))()
+    task.wait(1)
+
+    local char = lp.Character
+    local hum = char:WaitForChild("Humanoid")
+    local tor = char:WaitForChild("Torso")
+    local root = char:WaitForChild("HumanoidRootPart")
+    local head = char:WaitForChild("Head")
+    
+    hum.WalkSpeed = 18
+    hum.JumpPower = 55
+    hum:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+
+    local animate = char:FindFirstChild("Animate")
+    if animate then animate.Disabled = true end
+    for _, v in pairs(hum:GetPlayingAnimationTracks()) do v:Stop() end
+
+    local parts = {
+        Sword1 = nil, Sword2 = nil, Sword3 = nil, Sword4 = nil,
+        Sword5 = nil, Sword6 = nil, Halo = nil
+    }
+
+    local textureIds = {
+        ["5316471565"] = "Sword1", ["5278777022"] = "Sword2", 
+        ["5316510551"] = "Sword3", ["5692006383"] = "Sword4",
+        ["5268538095"] = "Sword5", ["5254572443"] = "Sword6",
+        ["115262824887782"] = "Halo"
+    }
+
+    local currentMode = "Mayhem"
+    local modeConfigs = {
+        Mayhem = {
+            SoundId = "rbxassetid://120792622724084",
+            Color = Color3.new(1, 0, 0),
+            Text = "MAYHEM",
+            Speed = 18,
+            DecalColor = Color3.new(1, 0, 0),
+            Gradient = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.new(1, 0, 0)), ColorSequenceKeypoint.new(1, Color3.new(0, 0, 0))})
+        },
+        Lost = {
+            SoundId = "rbxassetid://138115939307043",
+            Color = Color3.new(1, 1, 1),
+            Text = "LOST",
+            Speed = 22,
+            DecalColor = Color3.new(1, 1, 1),
+            Gradient = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)), ColorSequenceKeypoint.new(1, Color3.new(0, 0, 0))})
+        },
+        Light = {
+            SoundId = "rbxassetid://120355946201554",
+            Color = Color3.fromRGB(255, 244, 114),
+            Text = "Light",
+            Speed = 100,
+            DecalColor = Color3.fromRGB(255, 244, 114),
+            Gradient = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 244, 114)), ColorSequenceKeypoint.new(1, Color3.new(0, 0, 0))})
+        }
+    }
+
+    local screenGui = Instance.new("ScreenGui", lp.PlayerGui)
+    screenGui.Name = "CircleOverlay"
+    screenGui.IgnoreGuiInset = true
+    screenGui.DisplayOrder = 999999
+    screenGui.ScreenInsets = Enum.ScreenInsets.None
+    
+    local blackIn = Instance.new("Frame", screenGui)
+    blackIn.Size = UDim2.new(1, 500, 1, 500)
+    blackIn.Position = UDim2.new(0.5, 0, 0.5, 0)
+    blackIn.AnchorPoint = Vector2.new(0.5, 0.5)
+    blackIn.BackgroundColor3 = Color3.new(0, 0, 0)
+    blackIn.BorderSizePixel = 0
+    game:GetService("TweenService"):Create(blackIn, TweenInfo.new(1), {BackgroundTransparency = 1}):Play()
+
+    local sound = Instance.new("Sound")
+    sound.SoundId = modeConfigs[currentMode].SoundId
+    sound.Looped = true
+    sound.Volume = 2
+    sound.Parent = root
+    sound:Play()
+
+    local c1 = Instance.new("ImageLabel", screenGui)
+    c1.BackgroundTransparency = 1
+    c1.Image = "rbxassetid://79526458553971"
+    c1.Size = UDim2.new(0, 250, 0, 250)
+    c1.Position = UDim2.new(1, 0, 1, 0)
+    c1.AnchorPoint = Vector2.new(0.5, 0.5)
+    c1.ImageColor3 = modeConfigs[currentMode].DecalColor
+
+    local c2 = Instance.new("ImageLabel", screenGui)
+    c2.BackgroundTransparency = 1
+    c2.Image = "rbxassetid://79526458553971"
+    c2.Size = UDim2.new(0, 150, 0, 150)
+    c2.Position = UDim2.new(0.5, 0, 0, 0)
+    c2.AnchorPoint = Vector2.new(0.5, 0.5)
+    c2.ImageColor3 = modeConfigs[currentMode].DecalColor
+    
+    local slopeL = Instance.new("ImageLabel", screenGui)
+    slopeL.BackgroundTransparency = 1
+    slopeL.Image = "rbxassetid://78288185895922"
+    slopeL.Size = UDim2.new(0.3, 0, 0.4, 0)
+    slopeL.Position = UDim2.new(0, 0, 0.8, 0)
+    slopeL.AnchorPoint = Vector2.new(0.5, 0.5)
+    slopeL.ImageColor3 = modeConfigs[currentMode].DecalColor
+    slopeL.Rotation = 180
+
+    local slopeR = Instance.new("ImageLabel", screenGui)
+    slopeR.BackgroundTransparency = 1
+    slopeR.Image = "rbxassetid://78288185895922"
+    slopeR.Size = UDim2.new(0.3, 0, 0.4, 0)
+    slopeR.Position = UDim2.new(0.9, 0, 0, 0)
+    slopeR.AnchorPoint = Vector2.new(0.5, 0.5)
+    slopeR.ImageColor3 = modeConfigs[currentMode].DecalColor
+
+    local bigText = Instance.new("TextLabel", screenGui)
+    bigText.AnchorPoint = Vector2.new(0.5, 0.5)
+    bigText.BackgroundTransparency = 1
+    bigText.Text = modeConfigs[currentMode].Text
+    bigText.Font = Enum.Font.Antique
+    bigText.TextSize = 50
+    bigText.Rotation = -5
+    local bigGradient = Instance.new("UIGradient", bigText)
+    bigGradient.Color = modeConfigs[currentMode].Gradient
+
+    local glow = Instance.new("ImageLabel", screenGui)
+    glow.BackgroundTransparency = 1
+    glow.Image = "rbxassetid://6805220123"
+    glow.Size = UDim2.new(0, 800, 0, 400)
+    glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+    glow.AnchorPoint = Vector2.new(0.5, 0.5)
+    glow.ImageColor3 = Color3.new(0, 0, 0)
+
+    local modeFrame = Instance.new("Frame", screenGui)
+    modeFrame.Size = UDim2.new(0, 130, 0, 28)
+    modeFrame.Position = UDim2.new(0.1, 0, 0.9, 0)
+    modeFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    modeFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+    modeFrame.BackgroundTransparency = 0.5
+    modeFrame.BorderSizePixel = 0
+    local modeCorner = Instance.new("UICorner", modeFrame)
+    modeCorner.CornerRadius = UDim.new(0, 4)
+
+    local modeText = Instance.new("TextLabel", modeFrame)
+    modeText.Size = UDim2.new(1, 0, 1, 0)
+    modeText.BackgroundTransparency = 1
+    modeText.Text = "Mode: Mayhem"
+    modeText.TextColor3 = modeConfigs[currentMode].Color
+    modeText.Font = Enum.Font.Antique
+    modeText.TextSize = 20
+
+    local btnQ = Instance.new("TextButton", screenGui)
+    btnQ.Size = UDim2.new(0, 35, 0, 35)
+    btnQ.Position = UDim2.new(0.9, 0, 0.1, 0)
+    btnQ.BackgroundColor3 = Color3.new(0, 0, 0)
+    btnQ.BackgroundTransparency = 0.3
+    btnQ.BorderSizePixel = 2
+    btnQ.BorderColor3 = Color3.new(0, 0, 0)
+    btnQ.Rotation = 45
+    btnQ.Text = ""
+    local btnQText = Instance.new("TextLabel", btnQ)
+    btnQText.Size = UDim2.new(1, 0, 1, 0)
+    btnQText.BackgroundTransparency = 1
+    btnQText.Rotation = -45
+    btnQText.Text = "Q"
+    btnQText.TextColor3 = Color3.new(1, 0, 0)
+    btnQText.TextSize = 30
+    btnQText.Font = Enum.Font.Antique
+
+    local btnE = Instance.new("TextButton", screenGui)
+    btnE.Size = UDim2.new(0, 35, 0, 35)
+    btnE.Position = UDim2.new(0.9, 0, 0.3, 0)
+    btnE.BackgroundColor3 = Color3.new(0, 0, 0)
+    btnE.BackgroundTransparency = 0.3
+    btnE.BorderSizePixel = 2
+    btnE.BorderColor3 = Color3.new(0, 0, 0)
+    btnE.Rotation = 45
+    btnE.Text = ""
+    local btnEText = Instance.new("TextLabel", btnE)
+    btnEText.Size = UDim2.new(1, 0, 1, 0)
+    btnEText.BackgroundTransparency = 1
+    btnEText.Rotation = -45
+    btnEText.Text = "E"
+    btnEText.TextColor3 = Color3.new(1, 1, 1)
+    btnEText.TextSize = 30
+    btnEText.Font = Enum.Font.Antique
+
+    local btnR = Instance.new("TextButton", screenGui)
+    btnR.Size = UDim2.new(0, 35, 0, 35)
+    btnR.Position = UDim2.new(0.9, 0, 0.5, 0)
+    btnR.BackgroundColor3 = Color3.new(0, 0, 0)
+    btnR.BackgroundTransparency = 0.3
+    btnR.BorderSizePixel = 2
+    btnR.BorderColor3 = Color3.new(0, 0, 0)
+    btnR.Rotation = 45
+    btnR.Text = ""
+    local btnRText = Instance.new("TextLabel", btnR)
+    btnRText.Size = UDim2.new(1, 0, 1, 0)
+    btnRText.BackgroundTransparency = 1
+    btnRText.Rotation = -45
+    btnRText.Text = "R"
+    btnRText.TextColor3 = Color3.fromRGB(255, 244, 114)
+    btnRText.TextSize = 30
+    btnRText.Font = Enum.Font.Antique
+
+    local billboard = Instance.new("BillboardGui", head)
+    billboard.Name = "MayhemGui"
+    billboard.Size = UDim2.new(0, 200, 0, 50)
+    billboard.Adornee = head
+    billboard.StudsOffset = Vector3.new(0, 3, 0)
+    billboard.AlwaysOnTop = true
+
+    local textLabel = Instance.new("TextLabel", billboard)
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Text = modeConfigs[currentMode].Text
+    textLabel.Font = Enum.Font.Antique
+    textLabel.TextSize = 45
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.TextStrokeTransparency = 0
+    textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+
+    local uigradient = Instance.new("UIGradient", textLabel)
+    uigradient.Color = modeConfigs[currentMode].Gradient
+    uigradient.Rotation = 90
+
+    for _, v in pairs(char:GetChildren()) do
+        if v:IsA("Accessory") then
+            local handle = v:FindFirstChild("Handle")
+            if handle then
+                local tex = ""
+                if handle:IsA("MeshPart") then tex = handle.TextureID
+                else
+                    local m = handle:FindFirstChildOfClass("SpecialMesh")
+                    if m then tex = m.TextureId end
+                end
+                for id, name in pairs(textureIds) do
+                    if tex:find(id) then
+                        parts[name] = handle
+                        handle:BreakJoints()
+                        handle.CanCollide = false
+                        handle.Massless = true
+                        
+                        local a0 = Instance.new("Attachment", handle)
+                        a0.Position = Vector3.new(0, 2, 0)
+                        local a1 = Instance.new("Attachment", handle)
+                        a1.Position = Vector3.new(0, -2, 0)
+                        local tr = Instance.new("Trail", handle)
+                        tr.Attachment0 = a0
+                        tr.Attachment1 = a1
+                        tr.Lifetime = 0.8
+                        tr.WidthScale = NumberSequence.new({NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(1, 0)})
+                        tr.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)), ColorSequenceKeypoint.new(1, Color3.new(0, 0, 0))})
+                        tr.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0.4), NumberSequenceKeypoint.new(1, 1)})
+                    end
+                end
+            end
+        end
+    end
+
+    local joints = {
+        root = root:WaitForChild("RootJoint"), neck = tor:WaitForChild("Neck"),
+        rs = tor:WaitForChild("Right Shoulder"), ls = tor:WaitForChild("Left Shoulder"),
+        rh = tor:WaitForChild("Right Hip"), lh = tor:WaitForChild("Left Hip")
+    }
+
+    local currentCFs = {}
+    for name, joint in pairs(joints) do currentCFs[name] = joint.Transform end
+    local currentHatCFs = {}
+    for name, _ in pairs(parts) do currentHatCFs[name] = CFrame.new() end
+
+    local defaultFieldOfView = 70
+    local isAlive = true
+    local rC = 0
+
+    local function SwitchMode(modeName)
+        currentMode = modeName
+        local config = modeConfigs[modeName]
+        sound.SoundId = config.SoundId
+        sound:Play()
+        hum.WalkSpeed = config.Speed
+        modeText.Text = "Mode: " .. modeName
+        modeText.TextColor3 = config.Color
+        textLabel.Text = config.Text
+        uigradient.Color = config.Gradient
+        bigText.Text = config.Text
+        bigGradient.Color = config.Gradient
+        slopeL.ImageColor3 = config.DecalColor
+        slopeR.ImageColor3 = config.DecalColor
+        c1.ImageColor3 = config.DecalColor
+        c2.ImageColor3 = config.DecalColor
+    end
+
+    uis.InputBegan:Connect(function(input, gpe)
+        if gpe then return end
+        if input.KeyCode == Enum.KeyCode.E then SwitchMode("Lost")
+        elseif input.KeyCode == Enum.KeyCode.Q then SwitchMode("Mayhem")
+        elseif input.KeyCode == Enum.KeyCode.R then SwitchMode("Light") end
+    end)
+    btnQ.MouseButton1Click:Connect(function() SwitchMode("Mayhem") end)
+    btnE.MouseButton1Click:Connect(function() SwitchMode("Lost") end)
+    btnR.MouseButton1Click:Connect(function() SwitchMode("Light") end)
+
+    local connection1
+    local connection2
+
+    connection1 = rs.Stepped:Connect(function()
+        if not isAlive or not char:IsDescendantOf(workspace) then 
+            hum.CameraOffset = Vector3.new(0,0,0)
+            cam.FieldOfView = defaultFieldOfView
+            screenGui:Destroy()
+            connection1:Disconnect()
+            connection2:Disconnect()
+            return 
+        end
+        
+        local state = "idle"
+        local vel = tor.Velocity.Magnitude
+        local hState = hum:GetState()
+        local moveDir = root.CFrame:VectorToObjectSpace(hum.MoveDirection)
+        
+        local shake = Vector3.new(math.random(-15,15)/100, math.random(-15,15)/100, math.random(-15,15)/100)
+        local zoom = defaultFieldOfView + (math.sin(tick() * 4) * (defaultFieldOfView * 0.05))
+
+        hum.CameraOffset = hum.CameraOffset:Lerp(shake, 0.1)
+        cam.FieldOfView = cam.FieldOfView + (zoom - cam.FieldOfView) * 0.1
+
+        if currentMode == "Lost" then
+            rC = rC + 6
+        elseif currentMode == "Light" then
+            rC = rC + 32
+        else
+            rC = rC + 10
+        end
+        c1.Rotation = rC % 360
+        c2.Rotation = -rC % 360
+
+        modeFrame.Rotation = math.sin(tick() * 2) * 5
+        modeFrame.Position = UDim2.new(0.1, math.sin(tick() * 4) * 10, 0.9, math.cos(tick() * 4) * 5)
+
+        textLabel.Rotation = math.sin(tick() * 4) * 5
+        textLabel.Position = UDim2.new(0, math.sin(tick()*10)*2, 0, math.cos(tick()*10)*2)
+        
+        bigText.Rotation = math.sin(tick() * 2) * 6
+        bigText.Position = UDim2.new(0.8, math.sin(tick() * 3) * 15, 0.85, math.cos(tick() * 3) * 10)
+
+        if hState == Enum.HumanoidStateType.Freefall or hState == Enum.HumanoidStateType.Jumping then 
+            state = "jump"
+        elseif vel > 0.1 then
+            state = "walk"
+        end
+
+        local targets = {}
+        local hatTargets = {}
+        local cosM = (1 - math.cos(tick() * 1.5)) / 2
+        local cosM2 = (1 - math.cos(tick() * 2.5)) / 2
+        local rotCont = (tick() * 250) % 360
+        local rotCont2 = (tick() * 325) % 360
+        local s = math.sin(tick() * 1.5) * 5
+        local s2 = math.sin(tick() * 1.5) * 0.12
+        local s3 = math.sin(tick() * 1.5) * 1
+        local s4 = cosM * 15
+        local s5 = math.sin(tick() * 4) * 35
+        local s6 = math.sin(tick() * 4) * 0.2
+        local s7 = math.sin(tick() * 4) * 0.3
+        local s8 = cosM * 2
+        local s9 = cosM * 35
+        local s10 = cosM * 45
+        local s11 = cosM * 3.5
+        local s12 = cosM * 55
+        local s13 = math.sin(tick() * 1.5) * 5
+        local s14 = cosM2 * 25
+        local s15 = cosM2 * 2
+        local s16 = math.sin(tick() * 1.5) * 10
+        if currentMode == "Mayhem" then
+            if state == "idle" then
+                targets.root = cf(Vector3.new(0,0,s2), Vector3.new(-5-s,0,-10))
+                targets.neck = cf(Vector3.new(0,0,0), Vector3.new(30+s4,0,20))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(-10-s3,-20+math.sin(tick() * 1.5) * 3,-15+s))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-30+math.sin(tick() * 1.5) * 4,10+s3,-150+s))
+                targets.rh = cf(Vector3.new(0,-s2,0), Vector3.new(-5+s3,-10,-15-s))
+                targets.lh = cf(Vector3.new(0,-s2,0), Vector3.new(-7+s3,20,2+s))
+            elseif state == "walk" then
+                targets.root = cf(Vector3.new(0,0,-s2), Vector3.new(10,0,0))
+                targets.neck = cf(Vector3.new(0,0,0), Vector3.new(30+s4,0,20))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(math.sin(tick() * 4) * -10,20+math.sin(tick() * 4) * 20,s5))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-30+math.sin(tick() * 1.5) * 4,10+math.sin(tick() * 1.5) * 1,-150+s))
+                targets.rh = cf(Vector3.new(-s6,-s7,0), Vector3.new(0,0,-s5))
+                targets.lh = cf(Vector3.new(-s6,s7,0), Vector3.new(0,0,-s5))
+            elseif state == "jump" then
+                targets.root = cf(Vector3.new(0,0,0), Vector3.new(-15,0,0))
+                targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-20,0,0))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(-50,-20,-10))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-50,20,10))
+                targets.rh = cf(Vector3.new(0.5,0.5,0), Vector3.new(-10,-10,-30))
+                targets.lh = cf(Vector3.new(0,0,0), Vector3.new(-5,10,40))
+            end
+            hatTargets.Halo = cf(Vector3.new(0, 1, 2), Vector3.new(0, 0, rotCont))
+            hatTargets.Sword1 = cf(Vector3.new(3+s11, 2.5+s11, 2.5), Vector3.new(100, -30+s9, 110))
+            hatTargets.Sword2 = cf(Vector3.new(7+s11, 3.5+s11, 4.5), Vector3.new(100, -20+s10, 120))
+            hatTargets.Sword3 = cf(Vector3.new(11+s11, 4.5+s11, 6.5), Vector3.new(100, -10+s12, 130))
+            hatTargets.Sword4 = cf(Vector3.new(-3-s11, 2.5+s11, 2.2), Vector3.new(90, -50-s9, 100))
+            hatTargets.Sword5 = cf(Vector3.new(-7-s11, 3.5+s11, 4.2), Vector3.new(80, -60-s10, 100))
+            hatTargets.Sword6 = cf(Vector3.new(-11-s11, 4.5+s11, 6.2), Vector3.new(70, -70-s12, 100))
+        elseif currentMode == "Lost" then
+            if state == "idle" then
+                targets.root = cf(Vector3.new(0, 0, s2), Vector3.new(-10 + math.sin(tick() * 1.5) * 5, 0, -10))
+                targets.neck = cf(Vector3.new(0, 0, 0), Vector3.new(10 + math.sin(tick() * 1.5) * 10, 0, 20 + math.sin(tick() * 1.5) * 10))
+                targets.rs = cf(Vector3.new(0.2, 0, -0.2), Vector3.new(30, 60, 50))
+                targets.ls = cf(Vector3.new(-0.2, 0, 0), Vector3.new(20, -70, -70))
+                targets.rh = cf(Vector3.new(0, -s2, 0), Vector3.new(-10, -20, -10 + math.sin(tick() * 1.5) * 5))
+                targets.lh = cf(Vector3.new(0, -s2, 0), Vector3.new(-15, 20, 20 + math.sin(tick() * 1.5) * -5))
+            elseif state == "walk" then
+                targets.root = cf(Vector3.new(0,0,-s2), Vector3.new(10,0,0))
+                targets.neck = cf(Vector3.new(0, 0, 0), Vector3.new(10 + math.sin(tick() * 1.5) * 10, 0, 0))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(math.sin(tick() * 4) * -10,20+math.sin(tick() * 4) * 20,s5))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(math.sin(tick() * 4) * -10,20+math.sin(tick() * 4) * 20,s5))
+                targets.rh = cf(Vector3.new(-s6,-s7,0), Vector3.new(0,0,-s5))
+                targets.lh = cf(Vector3.new(-s6,s7,0), Vector3.new(0,0,-s5))
+            elseif state == "jump" then
+                targets.root = cf(Vector3.new(0,0,0), Vector3.new(-15,0,0))
+                targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-20,0,0))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(-50,-20,-10))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-50,20,10))
+                targets.rh = cf(Vector3.new(0.5,0.5,0), Vector3.new(-10,-10,-30))
+                targets.lh = cf(Vector3.new(0,0,0), Vector3.new(-5,10,40))
+            end
+            hatTargets.Halo = cf(Vector3.new(0, 2, 3), Vector3.new(0, 0, rotCont))
+            hatTargets.Sword1 = cf(Vector3.new(4+s15, 9+s15, 1.5), Vector3.new(100, 90-s14, 100))
+            hatTargets.Sword2 = cf(Vector3.new(5+s15, 4+s15, 1.5), Vector3.new(100, 45, 100))
+            hatTargets.Sword3 = cf(Vector3.new(4+s15, -1+s15, 1.5), Vector3.new(100, s14, 100))
+            hatTargets.Sword4 = cf(Vector3.new(-4-s15, 9+s15, 1.5), Vector3.new(100, -175+s14, 100))
+            hatTargets.Sword5 = cf(Vector3.new(-5-s15, 4+s15, 1.5), Vector3.new(100, -120, 100))
+            hatTargets.Sword6 = cf(Vector3.new(-4-s15, -1+s15, 1.5), Vector3.new(100, -75-s14, 100))
+        elseif currentMode == "Light" then
+            if state == "idle" then
+                targets.root = cf(Vector3.new(0,0,3-s3), Vector3.new(math.sin(tick() * 1.5) * 10,0,0))
+                targets.neck = cf(Vector3.new(0,0,0), Vector3.new(s16,0,20))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(math.sin(tick() * 1.5) * 10,-10,-30+s16))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-10+math.sin(tick() * 1.5) * -5,10,30+s16))
+                targets.rh = cf(Vector3.new(0.5,0.5,0), Vector3.new(-5,-5,-20-s))
+                targets.lh = cf(Vector3.new(0,0,0), Vector3.new(0,10,40+s16))
+            elseif state == "walk" then
+                targets.root = cf(Vector3.new(0,0,2), Vector3.new(70,0,0))
+                targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-20,0,0))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(-10,20,-30+s16))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-10,-20,30-s16))
+                targets.rh = cf(Vector3.new(0.4,0.2,0), Vector3.new(-10,-10,-30+s16))
+                targets.lh = cf(Vector3.new(-0.5,0,0), Vector3.new(0,0,50-s16))
+            elseif state == "jump" then
+                targets.root = cf(Vector3.new(0,0,0), Vector3.new(-15,0,0))
+                targets.neck = cf(Vector3.new(0,0,0), Vector3.new(-20,0,0))
+                targets.rs = cf(Vector3.new(0,0,0), Vector3.new(-50,-20,-10))
+                targets.ls = cf(Vector3.new(0,0,0), Vector3.new(-50,20,10))
+                targets.rh = cf(Vector3.new(0.5,0.5,0), Vector3.new(-10,-10,-30))
+                targets.lh = cf(Vector3.new(0,0,0), Vector3.new(-5,10,40))
+            end
+            local haloRotation = CFrame.Angles(0, 0, math.rad(rotCont))
+            hatTargets.Halo = cf(Vector3.new(0, 2, 3), Vector3.new(0, 0, rotCont2))
+
+            local function getOrbitCF(offset, angle, extraRot)
+                return hatTargets.Halo 
+                    * CFrame.Angles(0, 0, math.rad(angle)) 
+                    * CFrame.new(offset.X, offset.Y, offset.Z) 
+                    * extraRot
+            end
+            hatTargets.Sword1 = getOrbitCF(Vector3.new(6, -6, 1.5), 140, CFrame.Angles(math.rad(100), math.rad(0), math.rad(100)))
+            hatTargets.Sword2 = getOrbitCF(Vector3.new(6, -8, 1.5), -40, CFrame.Angles(math.rad(100), math.rad(0), math.rad(100)))
+            hatTargets.Sword3 = getOrbitCF(Vector3.new(6, -6, 1.5), 40, CFrame.Angles(math.rad(100), math.rad(0), math.rad(100)))
+            hatTargets.Sword4 = getOrbitCF(Vector3.new(6, -8, 1.5), -120, CFrame.Angles(math.rad(100), math.rad(0), math.rad(100)))
+            hatTargets.Sword5 = getOrbitCF(Vector3.new(24, -24, 0), 40, CFrame.Angles(math.rad(100), math.rad(0), math.rad(100)))
+            hatTargets.Sword6 = getOrbitCF(Vector3.new(-24, 24, 0), -120, CFrame.Angles(math.rad(100), math.rad(0), math.rad(100)))
+        end
+
+        for name, joint in pairs(joints) do
+            if targets[name] then
+                currentCFs[name] = currentCFs[name]:Lerp(targets[name], lerpSpeed)
+                joint.Transform = currentCFs[name]
+            end
+        end
+        for name, _ in pairs(parts) do
+            if hatTargets[name] then currentHatCFs[name] = currentHatCFs[name]:Lerp(hatTargets[name], lerpSpeed) end
+        end
+    end)
+
+    connection2 = rs.Heartbeat:Connect(function()
+        if not isAlive or not char:IsDescendantOf(workspace) then return end
+        for name, handle in pairs(parts) do
+            if handle and handle.Parent then
+                handle.CFrame = tor.CFrame * currentHatCFs[name]
+                handle.Velocity = Vector3.new(0, 35, 0)
+                handle.AssemblyLinearVelocity = Vector3.new(0, 35, 0)
+            end
+        end
+    end)
+
+    hum.Died:Connect(function()
+        isAlive = false
+        hum.CameraOffset = Vector3.new(0,0,0)
+        cam.FieldOfView = defaultFieldOfView
+        screenGui:Destroy()
+        connection1:Disconnect()
+        connection2:Disconnect()
+    end)
+end
+wait(1)
+local args = {
+	"cmd",
+	"-net"
+}
+game:GetService("ReplicatedStorage"):WaitForChild("01_server"):FireServer(unpack(args))
+RunReanimate()
