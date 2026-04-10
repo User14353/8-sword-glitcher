@@ -86,7 +86,7 @@ local function RunReanimate()
     screenGui.ScreenInsets = Enum.ScreenInsets.None
     
     local blackIn = Instance.new("Frame", screenGui)
-    blackIn.Size = UDim2.new(1, 0, 1, 0)
+    blackIn.Size = UDim2.new(1, 500, 1, 500)
     blackIn.Position = UDim2.new(0.5, 0, 0.5, 0)
     blackIn.AnchorPoint = Vector2.new(0.5, 0.5)
     blackIn.BackgroundColor3 = Color3.new(0, 0, 0)
@@ -146,21 +146,23 @@ local function RunReanimate()
     local glow = Instance.new("ImageLabel", screenGui)
     glow.BackgroundTransparency = 1
     glow.Image = "rbxassetid://6805220123"
-    glow.Size = UDim2.new(0, 800, 0, 400)
+
+    glow.Size = UDim2.new(1, 0, 1, 0) 
     glow.Position = UDim2.new(0.5, 0, 0.5, 0)
     glow.AnchorPoint = Vector2.new(0.5, 0.5)
-    glow.ImageColor3 = Color3.new(0, 0, 0)
 
-	local modeFrame = Instance.new("Frame", screenGui)
-	modeFrame.Size = UDim2.new(0.12, 0, 0.05, 0) -- scales with screen
-	modeFrame.Position = UDim2.new(0.1, 0, 0.9, 0)
-	modeFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-	modeFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-	modeFrame.BackgroundTransparency = 0.5
-	modeFrame.BorderSizePixel = 0
-	
-	local modeCorner = Instance.new("UICorner", modeFrame)
-	modeCorner.CornerRadius = UDim.new(0.2, 0)
+    glow.ImageColor3 = Color3.new(0, 0, 0)
+    glow.ScaleType = Enum.ScaleType.Stretch 
+
+    local modeFrame = Instance.new("Frame", screenGui)
+    modeFrame.Size = UDim2.new(0, 130, 0, 28)
+    modeFrame.Position = UDim2.new(0.1, 0, 0.9, 0)
+    modeFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    modeFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+    modeFrame.BackgroundTransparency = 0.5
+    modeFrame.BorderSizePixel = 0
+    local modeCorner = Instance.new("UICorner", modeFrame)
+    modeCorner.CornerRadius = UDim.new(0, 4)
 
     local modeText = Instance.new("TextLabel", modeFrame)
     modeText.Size = UDim2.new(1, 0, 1, 0)
